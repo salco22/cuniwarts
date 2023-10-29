@@ -60,7 +60,7 @@ fun GlobalFragment(
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 30.dp)
+                .padding(top = 40.dp)
         )
 
         PlusMinusButtons(
