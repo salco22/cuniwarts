@@ -3,6 +3,7 @@ package com.myapp.cuniwarts.features.housepointscalculator.presentation.globalvi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -35,7 +36,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.myapp.cuniwarts.R
-import com.myapp.cuniwarts.features.housepointscalculator.domain.Operation
+import com.myapp.cuniwarts.features.housepointscalculator.domain.components.House
+import com.myapp.cuniwarts.features.housepointscalculator.domain.components.Operation
 import com.myapp.cuniwarts.ui.theme.AccessGold
 import com.myapp.cuniwarts.ui.theme.Black
 import com.myapp.cuniwarts.ui.theme.CuniwartsTheme
@@ -44,7 +46,8 @@ import com.myapp.cuniwarts.ui.theme.hpSansFamily
 
 @Composable
 fun GlobalFragment(
-    viewModel : GlobalViewModel = hiltViewModel()
+    viewModel : GlobalViewModel = hiltViewModel(),
+    navigateToResult: () -> Unit
 ){
     Column(
         modifier = Modifier
@@ -97,6 +100,9 @@ fun GlobalFragment(
                     .size(160.dp)
                     .background(color = Color.Green, shape = RoundedCornerShape(8.dp))
                     .padding(8.dp)
+                    .clickable {
+                        viewModel.updateHouseValue(House.BABUBLU)
+                    }
             )
 
             Image(
@@ -107,6 +113,9 @@ fun GlobalFragment(
                     .size(160.dp)
                     .background(color = Color.Yellow, shape = RoundedCornerShape(8.dp))
                     .padding(8.dp)
+                    .clickable {
+                        viewModel.updateHouseValue(House.CRAVANE)
+                    }
             )
         }
 
@@ -116,22 +125,28 @@ fun GlobalFragment(
             horizontalArrangement = Arrangement.SpaceBetween) {
             Image(
                 painter = painterResource(id = R.drawable.giari_gris),
-                contentDescription = "Babi blu",
+                contentDescription = "Giari gris",
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .size(160.dp)
                     .background(color = Color.Blue, shape = RoundedCornerShape(8.dp))
                     .padding(8.dp)
+                    .clickable {
+                        viewModel.updateHouseValue(House.GIARISGRIS)
+                    }
             )
 
             Image(
                 painter = painterResource(id = R.drawable.suiru_ros),
-                contentDescription = "Crava né",
+                contentDescription = "Suiru ros",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(160.dp)
                     .background(color = Color.Red, shape = RoundedCornerShape(8.dp))
                     .padding(8.dp)
+                    .clickable {
+                        viewModel.updateHouseValue(House.SUIRURUS)
+                    }
             )
         }
 
@@ -143,7 +158,7 @@ fun GlobalFragment(
                 .padding(start = 50.dp, end = 50.dp, bottom = 20.dp),
             colors = buttonColors(containerColor = AccessGold),
             border = BorderStroke(8.dp, color = RelyDarkGold),
-            onClick = { /*TODO*/ }
+            onClick = { navigateToResult.invoke() }
         ) {
             Text(text = "View Results", color = Black, fontWeight = FontWeight.Bold, fontSize = 20.sp)
         }
@@ -260,6 +275,6 @@ private fun PlusMinusButtons(
 @Composable
 fun GlobalFragmentPreview() {
     CuniwartsTheme {
-        GlobalFragment()
+        GlobalFragment {}
     }
 }

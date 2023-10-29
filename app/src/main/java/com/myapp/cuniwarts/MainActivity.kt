@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.myapp.cuniwarts.features.housepointscalculator.presentation.globalview.GlobalFragment
+import com.myapp.cuniwarts.features.housepointscalculator.presentation.resultview.ResultFragment
 import com.myapp.cuniwarts.ui.theme.CuniwartsTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,7 +28,10 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 
                 NavHost(navController = navController, startDestination = GLOBAL_FRAGMENT ){
-                    composable(GLOBAL_FRAGMENT){ GlobalFragment()}
+                    composable(GLOBAL_FRAGMENT){ GlobalFragment(){
+                        navController.navigate(RESULTS_FRAGMENT)
+                    } }
+                    composable(RESULTS_FRAGMENT){ ResultFragment()}
                 }
                 
             }

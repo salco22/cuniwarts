@@ -1,17 +1,20 @@
 package com.myapp.cuniwarts.features.housepointscalculator.presentation.globalview
 
 import androidx.lifecycle.ViewModel
-import com.myapp.cuniwarts.features.housepointscalculator.domain.Operation
+import androidx.lifecycle.viewModelScope
+import com.myapp.cuniwarts.features.housepointscalculator.domain.components.Operation
+import com.myapp.cuniwarts.features.housepointscalculator.domain.repositories.HouseDbRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class GlobalViewModel @Inject constructor() : ViewModel() {
+class GlobalViewModel @Inject constructor(
+    private val repository: HouseDbRepository
+) : ViewModel() {
 
     private var actualValue : Int = 0
     private var actualOperation: Operation = Operation.SUM
-
-    private fun fetchDataFromDB(){}
 
 
     fun addValue(value: Int){
@@ -25,6 +28,16 @@ class GlobalViewModel @Inject constructor() : ViewModel() {
 
     fun selectedOperation(operation: Operation) {
         actualOperation = operation
+    }
+
+    fun updateHouseValue(house: String) {
+        viewModelScope.launch {
+            repository.updateSelectedHouse(
+                houseName = house,
+                amount = actualValue,
+                operation = actualOperation
+            )
+        }
     }
 
 }

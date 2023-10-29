@@ -89,6 +89,14 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
     implementation ("androidx.lifecycle:lifecycle-runtime-compose:$lifecycleVersion")
+
+    //Room
+    val room_version = "2.6.0"
+
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    implementation ("androidx.room:room-ktx:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
 }
 
 kapt {
