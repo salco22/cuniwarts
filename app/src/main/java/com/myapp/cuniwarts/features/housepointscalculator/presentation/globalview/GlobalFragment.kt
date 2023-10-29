@@ -1,9 +1,9 @@
 package com.myapp.cuniwarts.features.housepointscalculator.presentation.globalview
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,12 +12,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults.buttonColors
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.myapp.cuniwarts.R
+import com.myapp.cuniwarts.features.housepointscalculator.domain.Operation
 import com.myapp.cuniwarts.ui.theme.AccessGold
 import com.myapp.cuniwarts.ui.theme.Black
 import com.myapp.cuniwarts.ui.theme.CuniwartsTheme
@@ -49,6 +50,7 @@ fun GlobalFragment(
         modifier = Modifier
             .fillMaxSize()
             .background(color = AccessGold)
+            .verticalScroll(rememberScrollState())
     ) {
 
         Text(
@@ -56,11 +58,22 @@ fun GlobalFragment(
             fontFamily = hpSansFamily,
             fontSize = 100.sp,
             textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth().padding(top = 30.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 30.dp)
         )
+
+        PlusMinusButtons(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 45.dp, end = 45.dp),
+            onClick = {viewModel.selectedOperation(it)})
 
         ButtonHorizontalPager(
             items = intArrayOf(1,5,10,50,100),
+            modifier = Modifier
+                .padding(top = 15.dp, bottom = 15.dp)
+                .fillMaxWidth(),
             buttonSelected = {
                 viewModel.addValue(it)
             },
@@ -138,7 +151,6 @@ fun GlobalFragment(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ButtonHorizontalPager(
     items: IntArray,
@@ -147,17 +159,17 @@ private fun ButtonHorizontalPager(
     buttonUnelected: (Int) -> Unit
 ){
 
-    val state = rememberPagerState{
-        items.size
-    }
-
-    HorizontalPager(
-        state = state,
-        modifier = modifier
-    ) {
+    Row(
+        modifier = modifier.horizontalScroll(rememberScrollState()),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ){
+        items.forEach {
             SelectableButton(
-                text = "${items[it]}",
-                internalValue = items[it],
+                text = "$it",
+                internalValue = it,
+                modifier = Modifier
+                    .padding(10.dp)
+                    .width(100.dp),
                 selected = { value ->
                     (value as? Int)?.let {adder ->
                         buttonSelected(adder)
@@ -169,8 +181,8 @@ private fun ButtonHorizontalPager(
                     }
                 }
             )
+        }
     }
-
 }
 
 @Composable
@@ -192,10 +204,54 @@ private fun SelectableButton(
                 else -> unselected.invoke(internalValue)
             }
         },
-        colors = buttonColors( contentColor = if (isPressed)  MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.background),
+        colors = buttonColors( containerColor = if (isPressed) RelyDarkGold else AccessGold),
+        border = BorderStroke(8.dp, color = RelyDarkGold),
         modifier = modifier
     ) {
-        Text(text = text)
+
+        Text(text = text, fontWeight = FontWeight.Bold, fontSize = 30.sp, color = if (isPressed) AccessGold else RelyDarkGold)
+
+    }
+}
+
+@Composable
+private fun PlusMinusButtons(
+    modifier: Modifier = Modifier,
+    onClick: (Operation) -> Unit
+){
+
+    var isAddPressed : Boolean by remember { mutableStateOf(true) }
+
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+
+        /**
+         * Bottone che permette l'addizione
+         */
+        Button(
+            colors = buttonColors( containerColor = if (isAddPressed) RelyDarkGold else AccessGold),
+            border = BorderStroke(8.dp, color = RelyDarkGold),
+            onClick = {
+            isAddPressed = true
+            onClick.invoke(Operation.SUM)
+        }) {
+            Text(text = "Somma", fontWeight = FontWeight.Bold, fontSize = 30.sp, color = if (isAddPressed) AccessGold else RelyDarkGold)
+        }
+
+        /**
+         * Bottone che permette la sottrazione
+         */
+        Button(
+            colors = buttonColors( containerColor = if (!isAddPressed) RelyDarkGold else AccessGold),
+            border = BorderStroke(8.dp, color = RelyDarkGold),
+            onClick = {
+            isAddPressed = false
+            onClick.invoke(Operation.SUB)
+        }) {
+            Text(text = "Sottrai", fontWeight = FontWeight.Bold, fontSize = 30.sp, color = if (!isAddPressed) AccessGold else RelyDarkGold)
+        }
     }
 
 }

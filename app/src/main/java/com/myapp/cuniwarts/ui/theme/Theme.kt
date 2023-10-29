@@ -19,7 +19,7 @@ private val DarkColorScheme = darkColorScheme(
     primary = DirtGold,
     secondary = Black,
     tertiary = RelyDarkGold,
-    background = DirtGold
+    background = DirtGold,
 )
 
 private val LightColorScheme = lightColorScheme(
