@@ -132,8 +132,7 @@ private fun ResultHouseRow(house: CuniwardsHouses, points: Int, position: Int){
                         .background(
                             color = colorResource(id = house.color),
                             shape = RoundedCornerShape(8.dp)
-                        )
-                        .padding(start = 8.dp),
+                        ),
                     painter = painterResource(id = house.animal),
                     contentDescription = stringResource(id = house.name))
             }

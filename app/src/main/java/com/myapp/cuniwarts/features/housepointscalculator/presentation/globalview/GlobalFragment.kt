@@ -57,7 +57,7 @@ fun GlobalFragment(
     ) {
 
         Text(
-            text = "Cuniwards",
+            text = "Cuniwarts",
             fontFamily = hpSansFamily,
             fontSize = 100.sp,
             textAlign = TextAlign.Center,
