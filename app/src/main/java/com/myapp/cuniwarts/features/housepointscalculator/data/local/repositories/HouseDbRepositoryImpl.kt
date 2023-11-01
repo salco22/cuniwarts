@@ -42,8 +42,8 @@ class HouseDbRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun returnAllHouses(): Flow<HouseDbEntity> {
-        TODO("Not yet implemented")
+    override suspend fun returnAllHouses(): Flow<List<HouseDbEntity>> {
+        return dao.getAllHouses()
     }
 
 

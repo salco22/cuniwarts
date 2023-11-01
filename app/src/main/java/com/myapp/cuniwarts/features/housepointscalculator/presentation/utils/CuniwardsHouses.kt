@@ -36,4 +36,16 @@ sealed class CuniwardsHouses(@StringRes open val name: Int, @DrawableRes open va
         override val id: String = House.SUIRURUS
     ):CuniwardsHouses(name, animal, color,id)
 
+    companion object {
+        fun returnHouseFromName(houseName: String): CuniwardsHouses? {
+            return when(houseName){
+                 House.SUIRURUS -> CuniwardsHouses.SuiruRos()
+                 House.CRAVANE -> CuniwardsHouses.CravaNe()
+                 House.GIARISGRIS -> CuniwardsHouses.GiariGris()
+                 House.BABUBLU -> CuniwardsHouses.BabiBlu()
+                 else -> null
+             }
+        }
+    }
+
 }

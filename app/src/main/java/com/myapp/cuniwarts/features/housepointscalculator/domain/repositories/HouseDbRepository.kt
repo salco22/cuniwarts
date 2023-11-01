@@ -8,6 +8,6 @@ interface HouseDbRepository {
 
     suspend fun updateSelectedHouse(houseName : String, amount: Int, operation: Operation)
 
-    suspend fun returnAllHouses():Flow<HouseDbEntity>
+    suspend fun returnAllHouses():Flow<List<HouseDbEntity>>
 
 }
