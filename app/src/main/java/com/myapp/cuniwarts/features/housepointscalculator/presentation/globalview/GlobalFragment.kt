@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -39,7 +40,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.myapp.cuniwarts.features.housepointscalculator.domain.components.Operation
 import com.myapp.cuniwarts.features.housepointscalculator.presentation.utils.CuniwardsHouses
 import com.myapp.cuniwarts.ui.theme.AccessGold
-import com.myapp.cuniwarts.ui.theme.Black
 import com.myapp.cuniwarts.ui.theme.CuniwartsTheme
 import com.myapp.cuniwarts.ui.theme.RelyDarkGold
 import com.myapp.cuniwarts.ui.theme.hpSansFamily
@@ -122,12 +122,13 @@ fun GlobalFragment(
         Button(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 50.dp, end = 50.dp, bottom = 20.dp),
-            colors = buttonColors(containerColor = AccessGold),
+                .padding(start = 50.dp, end = 50.dp, bottom = 20.dp)
+                .height(80.dp),
+            colors = buttonColors(containerColor = RelyDarkGold),
             border = BorderStroke(8.dp, color = RelyDarkGold),
             onClick = { navigateToResult.invoke() }
         ) {
-            Text(text = "View Results", color = Black, fontWeight = FontWeight.Bold, fontSize = 20.sp)
+            Text(text = "View Results", color = AccessGold, fontWeight = FontWeight.Bold, fontSize = 40.sp, fontFamily = hpSansFamily)
         }
 
     }

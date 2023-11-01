@@ -8,8 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="suiru_ros">#740001</color>
-    <color name="babi_blu">#1a472a</color>
-    <color name="giari_gris">#0e1a40</color>
-    <color name="crava_ne">#ecb939</color>
+    <color name="suiru_ros">#ae0001</color>
+    <color name="babi_blu">#2a623d</color>
+    <color name="giari_gris">#222f5b</color>
+    <color name="crava_ne">#f0c75e</color>
+
 </resources>
