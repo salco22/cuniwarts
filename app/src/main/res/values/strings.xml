@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Cuniwarts</string>
+
+    <!-- CUNIWARDS HOUSES -->
+    <string name="BABI_BLU_NAME">babi blu</string>
+    <string name="CRAVA_NE_NAME">crava ne</string>
+    <string name="GIARI_GRIS_NAME">giari gris</string>
+    <string name="SUIRU_ROS_NAME">suiru ros</string>
+
 </resources>

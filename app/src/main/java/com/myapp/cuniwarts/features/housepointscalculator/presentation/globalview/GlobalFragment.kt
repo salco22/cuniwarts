@@ -26,18 +26,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.myapp.cuniwarts.R
-import com.myapp.cuniwarts.features.housepointscalculator.domain.components.House
 import com.myapp.cuniwarts.features.housepointscalculator.domain.components.Operation
+import com.myapp.cuniwarts.features.housepointscalculator.presentation.utils.CuniwardsHouses
 import com.myapp.cuniwarts.ui.theme.AccessGold
 import com.myapp.cuniwarts.ui.theme.Black
 import com.myapp.cuniwarts.ui.theme.CuniwartsTheme
@@ -92,62 +92,29 @@ fun GlobalFragment(
             .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween){
 
-            Image(
-                painter = painterResource(id = R.drawable.babi_blu),
-                contentDescription = "Babi blu",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(160.dp)
-                    .background(color = Color.Green, shape = RoundedCornerShape(8.dp))
-                    .padding(8.dp)
-                    .clickable {
-                        viewModel.updateHouseValue(House.BABUBLU)
-                    }
-            )
+            HouseImage(house = CuniwardsHouses.BabiBlu()){
+                viewModel.updateHouseValue(it)
+            }
 
-            Image(
-                painter = painterResource(id = R.drawable.crava_ne),
-                contentDescription = "Crava né",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(160.dp)
-                    .background(color = Color.Yellow, shape = RoundedCornerShape(8.dp))
-                    .padding(8.dp)
-                    .clickable {
-                        viewModel.updateHouseValue(House.CRAVANE)
-                    }
-            )
+            HouseImage(house = CuniwardsHouses.CravaNe()){
+                viewModel.updateHouseValue(it)
+            }
+
         }
 
         Row(modifier = Modifier
             .padding(start = 30.dp, end = 30.dp, top = 15.dp, bottom = 15.dp)
             .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween) {
-            Image(
-                painter = painterResource(id = R.drawable.giari_gris),
-                contentDescription = "Giari gris",
-                contentScale = ContentScale.Fit,
-                modifier = Modifier
-                    .size(160.dp)
-                    .background(color = Color.Blue, shape = RoundedCornerShape(8.dp))
-                    .padding(8.dp)
-                    .clickable {
-                        viewModel.updateHouseValue(House.GIARISGRIS)
-                    }
-            )
 
-            Image(
-                painter = painterResource(id = R.drawable.suiru_ros),
-                contentDescription = "Suiru ros",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(160.dp)
-                    .background(color = Color.Red, shape = RoundedCornerShape(8.dp))
-                    .padding(8.dp)
-                    .clickable {
-                        viewModel.updateHouseValue(House.SUIRURUS)
-                    }
-            )
+            HouseImage(house = CuniwardsHouses.GiariGris()){
+                viewModel.updateHouseValue(it)
+            }
+
+            HouseImage(house = CuniwardsHouses.SuiruRos()){
+                viewModel.updateHouseValue(it)
+            }
+
         }
 
         Spacer(modifier = Modifier.weight(1f))
@@ -164,6 +131,29 @@ fun GlobalFragment(
         }
 
     }
+}
+
+@Composable
+private fun HouseImage(
+    house: CuniwardsHouses,
+    modifier: Modifier = Modifier,
+    clickAction: (CuniwardsHouses) -> Unit
+){
+    Image(
+        painter = painterResource(id = house.animal),
+        contentDescription = stringResource(id = house.name),
+        contentScale = ContentScale.Fit,
+        modifier = modifier
+            .size(160.dp)
+            .background(
+                color = colorResource(id = house.color) ,
+                shape = RoundedCornerShape(8.dp)
+            )
+            .padding(8.dp)
+            .clickable {
+                clickAction.invoke(house)
+            }
+    )
 }
 
 @Composable
@@ -220,7 +210,7 @@ private fun SelectableButton(
             }
         },
         colors = buttonColors( containerColor = if (isPressed) RelyDarkGold else AccessGold),
-        border = BorderStroke(8.dp, color = RelyDarkGold),
+        border = BorderStroke(5.dp, color = RelyDarkGold),
         modifier = modifier
     ) {
 
@@ -247,7 +237,7 @@ private fun PlusMinusButtons(
          */
         Button(
             colors = buttonColors( containerColor = if (isAddPressed) RelyDarkGold else AccessGold),
-            border = BorderStroke(8.dp, color = RelyDarkGold),
+            border = BorderStroke(5.dp, color = RelyDarkGold),
             onClick = {
             isAddPressed = true
             onClick.invoke(Operation.SUM)
@@ -260,7 +250,7 @@ private fun PlusMinusButtons(
          */
         Button(
             colors = buttonColors( containerColor = if (!isAddPressed) RelyDarkGold else AccessGold),
-            border = BorderStroke(8.dp, color = RelyDarkGold),
+            border = BorderStroke(5.dp, color = RelyDarkGold),
             onClick = {
             isAddPressed = false
             onClick.invoke(Operation.SUB)
