@@ -28,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -39,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.myapp.cuniwarts.features.housepointscalculator.domain.components.Operation
 import com.myapp.cuniwarts.features.housepointscalculator.presentation.utils.CuniwardsHouses
+import com.myapp.cuniwarts.features.housepointscalculator.presentation.utils.VibratorHelper
 import com.myapp.cuniwarts.ui.theme.AccessGold
 import com.myapp.cuniwarts.ui.theme.CuniwartsTheme
 import com.myapp.cuniwarts.ui.theme.RelyDarkGold
@@ -140,6 +142,9 @@ private fun HouseImage(
     modifier: Modifier = Modifier,
     clickAction: (CuniwardsHouses) -> Unit
 ){
+
+    val vibratorHelper = VibratorHelper(LocalContext.current)
+
     Image(
         painter = painterResource(id = house.animal),
         contentDescription = stringResource(id = house.name),
@@ -152,6 +157,7 @@ private fun HouseImage(
             )
             .padding(8.dp)
             .clickable {
+                vibratorHelper.vibrate(100L)
                 clickAction.invoke(house)
             }
     )
